@@ -1,9 +1,11 @@
 "use client"
 
-import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar"
-import { Home, User, Bell, Search } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarMenu, SidebarGroup, SidebarGroupContent, SidebarMenuButton, SidebarMenuItem, SidebarGroupLabel } from "./ui/sidebar"
+import { Home, User, Bell, Search, Bookmark } from "lucide-react"
+import { Separator } from "./ui/separator"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { buttonVariants } from "./ui/button"
 
 
 
@@ -11,22 +13,27 @@ import { usePathname } from "next/navigation"
 const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/feed",
         icon: Home
     },
     {
         title: "Profile",
-        url: "#",
+        url: "/profile",
         icon: User
     },
     {
         title: "Notifications",
-        url: "#",
+        url: "/notifications",
         icon: Bell
     },
     {
+        title: "Bookmarks",
+        url: "/bookmarks",
+        icon: Bookmark
+    },
+    {
         title: "Search",
-        url: "#",
+        url: "/search",
         icon: Search
     }
 ]
@@ -40,19 +47,47 @@ export const AppSidebar = () => {
 
     return (
         <Sidebar>
-            <SidebarContent>
-                <SidebarMenu>
-                    {items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild>
-                                <Link href={item.url}>
-                                    <item.icon />
-                                    <span>{item.title}</span>
-                                </Link>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    ))}
-                </SidebarMenu>
+            <SidebarContent className="w-full h-full">
+                <SidebarGroup>
+                    <SidebarGroupContent>
+                        <SidebarMenu className="w-full">
+                            <SidebarMenuItem>
+                                <h3>Welcome</h3>
+                            <Separator orientation="horizontal" className="w-4/5"/>
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+                <SidebarGroup>
+                    <SidebarGroupLabel>
+                        <h3>Application</h3>
+                    </SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu className="flex flex-col w-full p-3 pl-10 h-full justify-center items-start gap-y-10">
+                            {items.map((item) => (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton asChild>
+                                        <Link href={item.url} className="text-3xl">
+                                            <item.icon />
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+                <SidebarGroup>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton asChild className={`${buttonVariants({variant: "outline"})}`}>
+                                    <a href="/api/auth/signout">Sign Out</a>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
             </SidebarContent>
         </Sidebar>
     )

@@ -1,10 +1,20 @@
+"use client"
+
 import { Separator } from "@/components/ui/separator";
-import Nav from "@/components/Nav"
+import { redirect } from 'next/navigation'
+import { useSession } from "next-auth/react"
 
 export default function Home() {
+
+  const { data: session } = useSession();
+
+
+  if (session && session.user) {
+    redirect("/feed")
+  }
+
   return (
     <main className="">
-      <Nav />
       <header className="w-full h-screen flex flex-col justify-between items-center">
         <section className="grid grid-rows-1 grid-cols-2 justify-center items-center">
           <article className="text-wrap px-16 py-32 text-sm flex flex-col gap-y-5">

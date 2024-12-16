@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from 'next/font/google'
-
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar"
-import { getSession } from "@/lib/session";
 import Footer from "@/components/Footer";
-// import { Session } from "@/lib/session"
+import Providers from "@/components/Providers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import Nav from "@/components/Nav";
 
 
 
@@ -41,48 +42,31 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = await getSession()
+  // const session = await getServerSession(authOptions)
+
+
+
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} antialiased`}
       >
-
-        {
-          session ? (
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <ThemeToggle />
-              <AppSidebar />
-              <SidebarProvider>
+        <Providers>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <ThemeToggle />
+                <Nav />
                 <main>
-                  <SidebarTrigger />
                   {children}
                 </main>
-              </SidebarProvider>
-              <Footer />
-            </ThemeProvider>
-          ) : (
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <ThemeToggle />
-              <main>
-                {children}
-              </main>
-              <Footer />
-            </ThemeProvider>
-          )
-
-        }
+                <Footer />
+              </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

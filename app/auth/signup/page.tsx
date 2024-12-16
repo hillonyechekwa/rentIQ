@@ -1,17 +1,20 @@
 import { buttonVariants } from '@/components/ui/button';
+import Link from 'next/link';
 import SignUpForm from './SignUpForm';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { BACKEND_URL } from "@/lib/contants";
+import { BACKEND_URL } from "@/lib/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import Image from 'next/image';
 import dummy from "../../../public/dummy.jpg"
 
 
 const SignUpPage = () => {
     return (
-        <main className="grid grid-cols-2 grid-rows-1 justify-evenly items-center w-full h-screen">
+        <main className="relative grid grid-cols-2 grid-rows-1 justify-evenly items-center w-full h-screen">
+            <Link href="/" className={`absolute top-0 left-0 text-white ${buttonVariants({variant: "link"})}`}><FontAwesomeIcon icon={faArrowLeft} size="xs" />  go back</Link>
             <Image src={dummy} alt="placeholder image" className="w-full h-full"/>
             <section className="w-full h-full grid place-items-center">
             <Card className="">

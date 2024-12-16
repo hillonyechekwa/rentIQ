@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/next_fs.iml" filepath="$PROJECT_DIR$/.idea/next_fs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../leaseview/urban-lamp-backend/.idea/urban-lamp-backend.iml" filepath="$PROJECT_DIR$/../leaseview/urban-lamp-backend/.idea/urban-lamp-backend.iml" />
-    </modules>
-  </component>
-</project>
