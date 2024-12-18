@@ -7,10 +7,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar"
 import Footer from "@/components/Footer";
-import Providers from "@/components/Providers";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Nav from "@/components/Nav";
+import { verifySession } from "@/lib/dal";
 
 
 
@@ -42,7 +40,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  // const session = await getServerSession(authOptions)
+  const isAuth = await verifySession()
 
 
 
@@ -51,22 +49,42 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} antialiased`}
-      >
-        <Providers>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <ThemeToggle />
+      >{
+          isAuth ? (
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ThemeToggle />
+              <SidebarProvider>
+                <AppSidebar />
                 <Nav />
                 <main>
+                  <SidebarTrigger />
                   {children}
                 </main>
                 <Footer />
-              </ThemeProvider>
-        </Providers>
+              </SidebarProvider>
+            </ThemeProvider>
+          ) : (
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ThemeToggle />
+              <Nav />
+              <main>
+                {children}
+              </main>
+              <Footer />
+            </ThemeProvider>
+          )
+        }
+
       </body>
     </html>
   );

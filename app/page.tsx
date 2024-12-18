@@ -1,17 +1,11 @@
-"use client"
+// "use client"
 
 import { Separator } from "@/components/ui/separator";
-import { redirect } from 'next/navigation'
-import { useSession } from "next-auth/react"
 
-export default function Home() {
+// 
 
-  const { data: session } = useSession();
+export default async function Home() {
 
-
-  if (session && session.user) {
-    redirect("/feed")
-  }
 
   return (
     <main className="">
